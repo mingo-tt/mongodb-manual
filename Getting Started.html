@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Getting Started</title>
+</head>
+<body>
+<div class="aside">
+	<ul>
+    <li class="current"><a href="./Getting Started.html">Getting Started</a></li>
+    <li class="current"><a href="./Getting Started.html">Getting Started</a></li>
+  </ul>
+</div>
+<div class="main">
+<h1 id="getting-started">Getting Started</h1>
+<p>This tutorial walks you through inserting test data into a MongoDB database and querying that data using the documentation&#39;s embedded web shell. You do not need to deploy or install MongoDB to complete this tutorial.</p>
+<p>The examples in this tutorial use a subset of the Sample Mflix Dataset, which is part of the sample data included in MongoDB&#39;s cloud-hosted service, MongoDB Atlas. Atlas requires no installation overhead and offers a free tier to get started. After completing this tutorial, you can use Atlas to explore additional sample data or host your own data.</p>
+<br/>
+<iframe title="MongoDB Web Shell" allowfullscreen="" sandbox="allow-scripts allow-same-origin" width="100%" height="320" src="https://mws.mongodb.com/?version=latest" class="css-107tt68"></iframe>
+<br/>
+<h2 id="aggregate-data-group-">Aggregate Data ($group)</h2>
+<p>You can use aggregation to group values from multiple documents together and return a single result. Aggregation in MongoDB is performed with an aggregation pipeline.</p>
+<p>While find() operations are useful for data retrieval, the aggregation pipeline allows you to manipulate data, perform calculations, and write more expressive queries than simple CRUD operations.</p>
+<p>In the shell, run the following aggregation pipeline to count the number of occurrences of each genre value:</p>
+<pre><code>db.movies.aggregate( [
+   { $unwind: &quot;$genres&quot; },
+   {
+     $group: {
+       _id: &quot;$genres&quot;,
+       genreCount: { $count: { } }
+     }
+   },
+   { $sort: { &quot;genreCount&quot;: -1 } }
+] )
+</code></pre><p>The pipeline uses:</p>
+<ul>
+<li>$unwind to output a document for each element in the genres array.</li>
+<li>$group and the $count accumulator to count the number of occurrences of each genre. This value is stored in the genreCount field.</li>
+<li>$sort to sort the resulting documents by the genreCount field in descending order.</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<h3 id="set-up-your-own-deployment">Set up Your Own Deployment</h3>
+<p>To set up your own deployment:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Deployment</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">MongoDB Atlas Free Tier Cluster</td>
+<td style="text-align:left">MongoDB Atlas is a fast, easy, and free way to get started with MongoDB. To learn more, see the Getting Started with Atlas tutorial.</td>
+</tr>
+<tr>
+<td style="text-align:left">Local MongoDB installation</td>
+<td style="text-align:left">For more information on installing MongoDB locally, see Install MongoDB.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="additional-examples">Additional Examples</h3>
+<p>For additional examples, including MongoDB driver specific examples (Python, Java, Node.js, etc.), see:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Query document examples</th>
+<th style="text-align:left">Query Documents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Update document examples</td>
+<td style="text-align:left">Update Documents</td>
+</tr>
+<tr>
+<td style="text-align:left">Delete document examples</td>
+<td style="text-align:left">Delete Documents</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</body>
+</html>
